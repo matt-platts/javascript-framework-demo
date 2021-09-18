@@ -1,5 +1,5 @@
 // User editable configuration 
-var apiPath = "https://www.mattplatts.com/demo/js-framework-api/";
+var apiPath = "https://www.mattplatts.com/demo/js-framework/js-framework-api/";
 var loadStyle = 1; // 1 - As sections become ready, 2 - In order of listing in pageRegister, 3 - All at once
 var currentUserVar = "$$_current_$$";
 var _homePage = "home";
