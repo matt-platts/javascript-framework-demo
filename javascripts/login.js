@@ -86,6 +86,8 @@ function validateInputsBasic(){
 					createCookie("returningUser", retrievedData["user"]["username"], 90);
 
 					createCookie("UserId",retrievedData["user"]["userId"],2);
+
+				alert(retrievedData["user"]["userType"]);
 					if (retrievedData["user"]["userType"]["CHILD"] == true) {
 						viewingAsId = currentUserVar;
 
@@ -102,6 +104,10 @@ function validateInputsBasic(){
 					if(retrievedData["user"]["userType"]["RELATIVE"] == true && retrievedData["user"]["userType"]["PARENT"] == false) {
 						viewingAsId = currentUserVar;
 						makePageCalls("relativeSummary");
+					};
+					if(retrievedData["user"]["userType"]["USER"] == true) {
+						alert("ITS A USER type of user");
+						makePageCalls("home");		
 					};
 					if(retrievedData["user"]["userType"]["PARENT"] == true) {
 						check_for_retarget_on_login(retrievedData["user"]["userId"]);
@@ -169,8 +175,8 @@ function validateInputsBasic(){
 								500 : function(data, textStatus, XMLHttpRequest) {
 									makePageCallsMobile("signupTwo", "signupTwoM");
 								}
-								}
-							});
+							}
+						});
 						};
 					}
 				});

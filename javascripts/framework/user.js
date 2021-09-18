@@ -76,7 +76,7 @@ user.prototype.getUserTypes = function(){
 		    }
 		}
 	});
-
+	alert(userTypes);
     return userTypes;
 
 }
