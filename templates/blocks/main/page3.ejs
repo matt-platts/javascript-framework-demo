@@ -1,0 +1,23 @@
+<h1 style="margin: 20px 0px">Page 3</h1>
+
+<p>This is the third page!</p>
+<br />
+<p>Here is some content on the third page, purely for the sake of it.</p>
+<br />
+<p>You can find the login page <a id="loginButton">here</a></p>
+<br />
+<p>Well, that's it for page 3 I think!</p>
+
+<script>
+
+$(document).ready(function() {
+    setHeaderText("Home"); // no longer required as we use a different template
+
+
+});
+
+// we need to alter the default css here to provide the wide layout and hide the header.
+$("#main").css("width","1003px");
+$("#pageHeader").hide();
+</script>
+

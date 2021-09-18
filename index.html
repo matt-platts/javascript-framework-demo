@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--[ifg m lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <title>Javascript framework demo | Matt Platts</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Javascript framework demo" />
+    <meta name="keywords" content="Javascript framework demo" />
+    <meta property="og:title" content="Javascript framework demo"/>
+    <meta property="og:description" content="Javascript framework demo" />
+    <meta property="og:image" content="https://www.mattplatts.com/images/profile.jpg" />
+
+    <script src="javascripts/framework/remoteDataContainer.js?v=0.1" type="text/javascript"></script>
+    <script src="javascripts/framework/rdc/registry.js?v=0.1" type="text/javascript"></script>
+    <script src="javascripts/framework/rdc/outputParser.js?v=0.1" type="text/javascript"></script>
+
+
+    <link rel="stylesheet" type="text/css" id="main_screen_stylesheet" href="skin/stylesheets/style.css?v=0.1" />
+    <link rel="stylesheet" type="text/css" id="main_print_stylesheet" href="skin/stylesheets/print-style.css?v=0.1"  media="print" />
+    <link rel="SHORTCUT ICON" href="favicon.ico" type="image/x-icon" />
+
+    <script src="javascripts/jQuery/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <script src="javascripts/jQuery/AJAXUpload.min.js" type="text/javascript"></script>
+    <script src="javascripts/ejs/ejs.js?v=0.1" type="text/javascript"></script>
+    <script src="javascripts/ejs/view.js?v=0.1" type="text/javascript"></script>
+    <script src="javascripts/modernizr/modernizr-2.6.1.min.js" type="text/javascript"></script>
+
+    <script src="javascripts/framework/sharedFunctions.js?v=0.1" type="text/javascript"></script>
+    <script src="javascripts/framework/timedEvents.js?v=0.1" type="text/javascript"></script>
+    <script src="javascripts/framework/viewControllerFunctions.js?v=0.1" type="text/javascript"></script>
+    <script src="javascripts/framework/user.js?v=0.1" type="text/javascript"></script>
+
+    <!-- ***************************************** Google Anaytics (Begin) ************************************************** -->
+    <script type="text/javascript">
+		// removed for demo	
+    </script>
+    <!-- ***************************************** Google Anaytics (End) ************************************************** -->
+    <script type="text/javascript">
+
+        var appVersion = "0.1";
+
+    </script>
+
+
+</head>
+<body>
+
+<div id="view-container" >
+</div>
+<script type="text/javascript">
+    loader =
+    {
+        loadScript : function(scriptName)
+        {
+            var el = document.createElement('script');
+            el.async = false;
+            el.src = scriptName+'?v=appVersion';
+            el.type = 'text/javascript';
+            (document.getElementsByTagName('HEAD')[0]||document.body).appendChild(el);
+        }
+    };
+</script>
+
+<script src="javascripts/framework/initialise.js?v=appVersion" type="text/javascript"></script>
+
+<noscript>
+    <div style="display:inline;">
+		<p>Sorry, this page requires Javascript to be turned on.</p>
+    </div>
+</noscript>
+
+</body>
+</html>

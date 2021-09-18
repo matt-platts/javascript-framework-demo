@@ -1,0 +1,182 @@
+{
+    "home" : {
+        "name" : "Home Page",
+        "layout" : "webapp-layout",
+        "blocks" : {
+            "header" : {
+                "webappHeader" : "header"
+            },
+            "webappHeaderMenu" : {
+                "webappHeaderMenu" : "header"
+            },
+            "subMenuPlaceholder" : {
+                "noMenu" : "header"
+            },
+            "mainContent" : {
+                "appHome" : "main"
+            },
+            "footer" : {
+                "webappFooter": "main/shared"
+            }
+        },
+        "replacementStyleSheets" : "skin/main/stylesheets/webapp.css",
+        "additionalStyleSheets" : "skin/main/stylesheets/homepage.css",
+        "allowedUserTypes" : ["external"]
+    },
+
+    "login" : {
+        "name" : "Home Page",
+        "layout" : "webapp-layout",
+        "blocks" : {
+            "header" : {
+                "webappHeader" : "header"
+            },
+            "webappHeaderMenu" : {
+                "webappHeaderMenu" : "header"
+            },
+            "subMenuPlaceholder" : {
+                "noMenu" : "header"
+            },
+            "mainContent" : {
+                "appLogin" : "main"
+            },
+            "footer" : {
+                "webappFooter": "main/shared"
+            }
+        },
+        "replacementStyleSheets" : "skin/main/stylesheets/webapp.css",
+        "allowedUserTypes" : ["external"]
+    },
+
+    "forgottenCredentials" : {
+        "name" : "Home Page",
+        "layout" : "webapp-layout",
+        "blocks" : {
+            "header" : {
+                "webappHeader" : "header"
+            },
+            "webappHeaderMenu" : {
+                "webappHeaderMenu" : "header"
+            },
+            "subMenuPlaceholder" : {
+                "noMenu" : "header"
+            },
+            "mainContent" : {
+                "appForgottenCredentials" : "main"
+            },
+            "footer" : {
+                "webappFooter": "main/shared"
+            }
+        },
+        "replacementStyleSheets" : "skin/main/stylesheets/webapp.css",
+        "allowedUserTypes" : ["external"]
+    },
+
+    "page2" : {
+        "name" : "Page 2",
+        "layout" : "webapp-layout",
+        "blocks" : {
+            "header" : {
+                "webappHeader" : "header"
+            },
+            "webappHeaderMenu" : {
+                "webappHeaderMenu" : "header"
+            },
+            "pageHeader" : {
+                "topBarMainApp" : "topBar"
+            },
+            "subMenuPlaceholder" : {
+                "noMenu" : "header"
+            },
+            "mainContent" : {
+                "page2" : "main"
+            },
+            "footer" : {
+                "webappFooter": "main/shared"
+            }
+        },
+        "replacementStyleSheets" : "skin/main/stylesheets/webapp.css",
+        "allowedUserTypes" : ["parent"]
+    },
+
+    "page3" : {
+        "name" : "Page 3",
+        "layout" : "webapp-layout",
+        "blocks" : {
+            "header" : {
+                "webappHeader" : "header"
+            },
+            "webappHeaderMenu" : {
+                "webappHeaderMenu" : "header"
+            },
+            "pageHeader" : {
+                "topBarMainApp" : "topBar"
+            },
+            "subMenuPlaceholder" : {
+                "noMenu" : "header"
+            },
+            "mainContent" : {
+                "page3" : "main"
+            },
+            "footer" : {
+                "webappFooter": "main/shared"
+            }
+        },
+        "replacementStyleSheets" : "skin/main/stylesheets/webapp.css",
+        "allowedUserTypes" : ["parent"]
+    },
+
+    "page4" : {
+        "name" : "Page 4",
+        "layout" : "webapp-layout",
+        "blocks" : {
+            "header" : {
+                "webappHeader" : "header"
+            },
+            "webappHeaderMenu" : {
+                "webappHeaderMenu" : "header"
+            },
+            "pageHeader" : {
+                "topBarMainApp" : "topBar"
+            },
+            "subMenuPlaceholder" : {
+                "noMenu" : "header"
+            },
+            "mainContent" : {
+                "appRules" : "main/parent"
+            },
+            "footer" : {
+                "webappFooter": "main/shared"
+            }
+        },
+        "replacementStyleSheets" : "skin/main/stylesheets/webapp.css",
+        "allowedUserTypes" : ["parent"]
+    },
+
+    "page5" : {
+        "name" : "Page 5",
+        "layout" : "webapp-layout",
+        "blocks" : {
+            "header" : {
+                "webappHeader" : "header"
+            },
+            "webappHeaderMenu" : {
+                "webappHeaderMenu" : "header"
+            },
+            "pageHeader" : {
+                "topBarMainApp" : "topBar"
+            },
+            "subMenuPlaceholder" : {
+                "noMenu" : "header"
+            },
+            "mainContent" : {
+                "page5" : "main"
+            },
+            "footer" : {
+                "webappFooter": "main/shared"
+            }
+        },
+        "replacementStyleSheets" : "skin/main/stylesheets/webapp.css",
+        "allowedUserTypes" : ["parent"]
+    }
+}

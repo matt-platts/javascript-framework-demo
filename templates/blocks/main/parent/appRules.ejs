@@ -1,0 +1,274 @@
+<script type="text/javascript">
+$(document).ready(function() {
+    setHeaderText("Rules");
+});
+</script>
+<%
+profileSrc = getProfileImageSrc(getUser["user"].imageId, getUser["user"].gender, "CHILD", "large");
+%>
+
+<%
+	 // Parent rules - get all child limits.
+	 // The functions below are essentially loading data into arrays where it is easier to find by child Id later
+
+    allChildLimits=Array();
+    childUserIds=Array();
+    childRefIds=Array();
+    childCardStatuses=Array();
+    childCounter=0;
+    childNames=Array();
+    activateButtons=Array();
+
+	 allChildLimits=Array();
+	 childCardStatuses=Array();
+
+	 for (eachChild in getAllCards.cards){
+				allChildLimits[eachChild]=getAllLimits.limits[eachChild];
+				childCardStatuses[eachChild]=getAllCards.cards[eachChild];
+	 }
+
+
+    for (cycleChildVar in currentPageData['getChildren'].users){
+
+        userId = cycleChildVar["userId"];
+        userId = currentPageData['getChildren'].users[cycleChildVar]["userId"];
+        refId=currentPageData['getChildren'].users[cycleChildVar]["id"];
+		  childUserIds.push(userId);
+		  childRefIds.push(refId);
+		  childCounter++;
+		  childNames[getChildren.users[cycleChildVar]['userId']]=currentPageData.getChildren.users[cycleChildVar]['relationDetails']['firstName'];
+
+    }
+
+%>
+
+<div id="page_block_margins" style="float:left; margin-top:31px;">
+
+   <table class="rules_and_limits_table" style="width:100%; border-collapse:collapse;">
+   <col style="border-right:1px #e1e1e1 solid" />
+   <%
+        for (i=0;i<childCounter;i++){
+   %>
+   <col style="border-right:1px #e1e1e1 solid; font-size:40px;" />
+   <%}%>
+    <tr>
+        <td style="width:480px; vertical-align:middle; text-align:left;">
+		  <p style="width:200px;"> Set the weekly allowance and spending rules for each of your children </p>
+		  </td>
+   <%
+        for (i=0;i<childCounter;i++){
+
+   %>
+        <td style="align:center">
+		  <p style="margin:0px auto; width:100%; margin-left:1px; margin-bottom:5px; font-family:'SegoeUI Semibold'; font-size:13px;"><%= childNames[childUserIds[i]]%></p>
+
+        <!--<%=currentPageData.getChildren['users'][childRefIds[i]].nickname%> or <%= childNames[childUserIds[i]]%> //-->
+
+        <% var profileSrc = getProfileImageSrc(currentPageData.getChildren["users"][childRefIds[i]]["relationDetails"].imageId, currentPageData.getChildren["users"][childRefIds[i]]["relationDetails"].gender, "CHILD", "medium"); %>
+         <img src="<%= profileSrc %>" style="width:50px; height:50px; margin-bottom:2px;">
+    <p style="margin-bottom:5px"><a id="limits=<%=childUserIds[i]%>" class="limits hoverpointer">Edit rules</a></p>
+
+        </td>
+        <%}%>
+    </tr>
+    <tr style="background-color:#f2f3f4">
+        <td style="text-align:left"><h3>Card status</h3><p style="margin-bottom:10px; clear:both; float:left; font-size:14px">To stop a card being used, block it here</p></td>
+
+   <%
+        for (i=0;i<childCounter;i++){
+   %>
+
+        <td style="padding:10px; vertical-align:top; min-width:90px; padding-top:32px;">
+            <% if (childCardStatuses[childUserIds[i]]['activeProvider']==0){ %>
+<!--
+        <img src="skin/main/images/toggle-button-inactive.gif" class="card_active_toggler" id="active_toggler_<%=childUserIds[i]%>-<%=childNames[childUserIds[i]]%>"/>
+//-->
+                    <% switch(childCardStatuses[childUserIds[i]].status.toUpperCase()) {
+
+                        case "STOLEN": %>
+                            <p>Card reported as stolen</p>
+                        <%
+                        break;
+                        case "LOST": %>
+                            <p>Card reported as lost</p>
+                        <%
+                        break;
+                        case "SUSPEND": %>
+                            <p>Card suspended -  please contact customer services</p>
+                        <%
+                        break;
+                        case "NO FIS ACCOUNT": %>
+                            <p>Card not requested</p>
+                        <%
+                        break;
+                        default:
+                        %>
+                            <p>Card not yet activated</p>
+                        <%
+                        break;
+                        } // end switch statement
+                        %>
+
+            <% } else { // activeProvider is 1 from here %>
+            <% if (childCardStatuses[childUserIds[i]]['activeLocal']=="1"){ %>
+            <img src="skin/main/images/toggle-button-active.gif" class="card_active_toggler" id="active_toggler_<%=childUserIds[i]%>-<%=childNames[childUserIds[i]]%>" />
+
+            <% if (childCardStatuses[childUserIds[i]]['status']==0) { %>
+            CARD NOT REQUESTED
+            <% } else { %>
+        <DELETED_ELEMENTimg src="skin/main/images/toggle-button-inactive.gif" class="card_active_toggler" />
+            <%}%>
+        <% } else {
+            // card has been blocked
+        %>
+            <img src="skin/main/images/toggle-button-blocked.png" class="card_active_toggler" id="active_toggler_<%=childUserIds[i]%>-<%=childNames[childUserIds[i]]%>" />
+
+        <%} // end activeLocal %>
+        <% } // end activeProvider is 1 %>
+        </td>
+        <script>
+
+            buttonName = "active_toggler_<%=childUserIds[i]%>-<%=childNames[childUserIds[i]]%>";
+            activateButtons[<%=i%>] = document.getElementById(buttonName);
+            /*
+                activateButtons[<%=i%>].addEventListener('dragstart', function(evt){
+                        evt.preventDefault();
+                        data=Array;
+                        data['childName']="<%=childNames[childUserIds[i]]%>";
+                        data['childId']=childUserIds[<%=i%>];
+                        data['cardBlockUrlId']=childUserIds[<%=i%>];
+                        data['buttonId']=buttonName;
+                        alert(activateButtons[<%=i%>].src);
+                       if (activateButtons[<%=i%>].src.match(/button-active.gif/)){
+                            activateButtons[<%=i%>].src="skin/main/images/toggle-button-active.gif";
+                            popupUrl= 'templates/blocks/main/parent/parentBlockCard.ejs';
+                       } else {
+                            activateButtons[<%=i%>].src="skin/main/images/toggle-button-inactive.gif";
+                            popupUrl= 'templates/blocks/main/parent/parentReactivateCard.ejs';
+                       }
+
+                        doPopup(popupUrl,400,200,data);
+            }, false);
+            */
+        </script>
+        <%
+
+
+
+
+        } // end each %>
+    </tr>
+    <tr>
+        <td style="text-align:left"><h3>Weekly allowance</h3><p style="margin-bottom:10px; clear:both; float:left; font-size:14px;">Paid each <a href="Javascript:void(0);" class="weekly-pktmny-day" id="changePktmnyDay"><%=dayIndexToDay(getUser['user']['pktmnyDay'])%></a> morning</p></td>
+   <%
+        for (i=0;i<childCounter;i++){
+
+   %>
+        <td>&pound;<%=getAllPktmny.pktmny[childUserIds[i]]['amount']%></td>
+        <%}%>
+    </tr>
+    <tr style="background-color:#f2f3f4">
+        <td style="text-align:left"><h3 style="margin-bottom:0px">Spending limits</h3></td>
+   <%
+        for (i=0;i<childCounter;i++){
+   %>
+        <td></td>
+        <%}%>
+    </tr>
+    <tr style="background-color:#f2f3f4">
+        <td style="text-align:left"><h4 style="color:#404040; font-size:16px;">Weekly spend limit</h4>The total that can be spent in one week</td>
+        <%
+            for (i=0;i<childCounter;i++){
+        %>
+        <td>&pound;<%=allChildLimits[childUserIds[i]]["limitSpending"]%></td>
+        <%}%>
+    </tr>
+    <tr style="background-color:#f2f3f4">
+        <td style="text-align:left"><h4 style="color:#404040; font-size:16px;">Single spend limit</h4>The total that can be spent in one transaction</td>
+        <%
+            for (i=0;i<childCounter;i++){
+        %>
+        <td>&pound;<%=allChildLimits[childUserIds[i]]["limitTransaction"]%></td>
+        <%}%>
+    </tr>
+    <tr style="background-color:#f2f3f4">
+        <td style="text-align:left"><h4 style="color:#404040; font-size:16px">Cash machine limit</h4><p style="margin-bottom:0px;">The maximum cash that can be taken out in one go</p>
+				<p class="subtext_light" style="margin-bottom:10px">(A maximum of &pound;120 can be taken out in one day)</p></td>
+        <%
+            for (i=0;i<childCounter;i++){
+        %>
+        <td>&pound;<%=allChildLimits[childUserIds[i]]["limitAtm"]%></td>
+        <%}%>
+    </tr>
+    <tr>
+        <td style="text-align:left"><h3>Where the card can be used</h3></td>
+   <%
+        for (i=0;i<childCounter;i++){
+   %>
+        <td></td>
+        <%}%>
+    </tr>
+    <tr>
+        <td style="text-align:left"><p style="margin:0px; font-size:14px">High street</p></td>
+   <%
+        for (i=0;i<childCounter;i++){
+            if (allChildLimits[childUserIds[i]]["canStreet"]=="1"){
+   %>
+        <td><img src="skin/main/images/icon-tick-green.gif" class="use_where_selector"></td>
+        <%} else { %>
+        <td><img src="skin/main/images/icon-tick-off.gif" class="use_where_selector"></td>
+        <%}
+            }%>
+    </tr>
+    <tr>
+        <td style="text-align:left"><p style="margin:0px; font-size:14px">Online</td>
+   <%
+        for (i=0;i<childCounter;i++){
+            if (allChildLimits[childUserIds[i]]["canWebOthers"]=="1"){
+   %>
+        <td><img src="skin/main/images/icon-tick-green.gif" class="use_where_selector"></td>
+        <%} else { %>
+        <td><img src="skin/main/images/icon-tick-off.gif" class="use_where_selector"></td>
+        <%}
+            }%>
+    </tr>
+    <tr>
+        <td style="text-align:left"><p style="margin:0px; font-size:14px">Cash machines</p></td>
+   <%
+        for (i=0;i<childCounter;i++){
+            if (allChildLimits[childUserIds[i]]["canAtm"]=="1"){
+   %>
+        <td><img src="skin/main/images/icon-tick-green.gif" class="use_where_selector"></td>
+        <%} else { %>
+        <td><img src="skin/main/images/icon-tick-off.gif" class="use_where_selector"></td>
+        <%}
+            }%>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+   <%
+        for (i=0;i<childCounter;i++){
+   %>
+        <td></td>
+        <%}%>
+    </tr>
+    <tr>
+        <td></td>
+   <%
+        for (i=0;i<childCounter;i++){
+   %>
+        <td>
+				<!--
+					 <a href="Javascript: void(0);" class="limits" id="limits=<%=childUserIds[i]%>"><div class="edit_rule green_gradient" style="width:60px; height:22px; font-size:13px; margin:0px auto; border-radius:3px; color:white; vertical-align:middle; padding-top:7px;">Edit</div></a>//-->
+
+
+	 <!--
+				<a href="Javascript: void(0);" class="limits" id="limits=<%=childUserIds[i]%>"><div class="green_gradient gohenry_button" style="width:60px; margin:0px auto;">Edit</div><br /><br /></a></td>
+	 //-->
+</td>
+		  <%}%>
+    </tr>
+    </table>
+</div>
+<br clear="all" /><br /><br />
+&nbsp;

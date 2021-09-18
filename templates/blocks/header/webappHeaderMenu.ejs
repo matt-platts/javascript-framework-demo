@@ -1,0 +1,289 @@
+<%
+
+/*
+//  Get Home Page url, load in to var homePage - set this url to be a static link to the home page.
+//  Why? Because we dont use an inbuilt function (makePageCalls, loadPage etc), but cause a hard browser reload in case the user is
+//  signed in and viewing as another user - this resets the viewingAsId (which is never required on the home page and only set explicitly).
+//  The url is set differently for the dev environment, and webapp / secure
+*/
+
+if (window.location.hostname.match(/cuser/)){
+    homePage="/#home";
+} else if (location.href.match(/webapp/)) {
+	 testFor=/webapp([^/])/;
+	 newUri = location.href.replace(testFor, "webapp$1");
+	 newUri = location.href.replace(/#.*/, "");
+    homePage= newUri + "#home";
+} else {
+    homePage="/demo/js-framework/#home";
+}
+	 homePage="Javascript:loadPage('home');";
+
+
+    // if the user was originally a bursar, the home page logs them out and back in as the bursar...
+    adminHomePage="";
+    bursarUser=readCookie('GroupAdminUsername');
+    bursarToken=readCookie('GroupAdminToken');
+    if (bursarUser && bursarToken){
+        adminHomePage="Javascript:bursarHome()";
+    } else {
+    }
+
+%>
+<div id="menu_wrapper" style="margin:0px auto; float:left; width:100%; text-align:center; float:left;">
+<div id="menu_wrapper_inner" style="width:630px; margin:0px auto;">
+<!-- as the savings button has been removed, the below is nudged left 50px for this reason only. It can be removed when the button is returned //-->
+<ul id="top-menu" style="position:relative; left:50px">
+
+<script>
+
+function loadPage(page){
+	 /* a wrapper for makePageCalls which also checks to see if it needs to animate and expand the main view port of the design and show the header bar */
+
+	 var animate=1;
+	 var cancelAnimate=0;
+	 var pageWidth;
+	 if (animate){
+		  if (page=="home"){
+				$("#pageHeader").fadeOut();
+				pageWidth=1003;
+		  } else {
+				pageWidth=713;
+				cancelAnimate=0;
+				if ($("#main").css("width") == "713px") {cancelAnimate=1; }
+		  }
+
+	 if (!cancelAnimate){
+				$( "#main" ).animate({
+				width: pageWidth
+				}, 200, function() {
+				// Animation complete.
+				});
+		  } else {
+				$("#main").css("width","713px");
+		  }
+	 }
+	 makePageCalls(page);
+}
+
+
+/* Set background image for top menu */
+function setBg(what,switcher){
+
+
+    if (switcher){ // there is a mouseOver
+            what.style.backgroundImage="url('skin/main/images/main-menu-hover.gif')";
+        } else {
+                // there is a mouse OUT
+                //alert($(what).children("a").attr("id") + " cmp " + activeMenuItem);
+            if ($(what).children("a").attr("id") !== activeMenuItem){
+                what.style.backgroundImage="none";
+            } else {
+            }
+        }
+}
+
+function setBgHover(what,switcher){
+
+    if (switcher){ // there is a mouseOver
+            if ($(what).children("a").attr("id") !== activeMenuItem){
+					 what.style.backgroundImage="url('skin/main/images/main-menu-hover-over.gif')";
+				} else {
+					 what.style.backgroundImage="url('skin/main/images/main-menu-hover.gif')";
+				}
+        } else {
+                // there is a mouse OUT
+                //alert($(what).children("a").attr("id") + " cmp " + activeMenuItem);
+            if ($(what).children("a").attr("id") !== activeMenuItem){
+                what.style.backgroundImage="none";
+            } else {
+            }
+        }
+}
+
+function setBgExternal(li_id){
+	 $("li.icon").css("background-image","none");
+	 document.getElementById(li_id).style.backgroundImage="url('skin/main/images/main-menu-hover.gif')";
+	 activeMenuItem=li_id;
+}
+
+activeMenuItem="";
+$( document ).ready(function(){
+
+	 // to run when page first loads - set the background dependent on the hash
+	 // may need to adjust the urls and labels in the future so this matches up easily.
+	 // note that children and relatives have the _userId on the end of the hash which is pulled out below!
+    var urlHash = window.location.hash.indexOf('_')>=1? window.location.hash.substr(0,window.location.hash.indexOf('_')).replace("#",""):window.location.hash.substr(1);
+
+    if (urlHash=="home"){
+        activeMenuItem = "page-home";
+        $("#li-home").css("background-image","url(skin/main/images/main-menu-hover.gif)");
+    } else if (urlHash=="rules"){
+        activeMenuItem = "page-rules";
+        $("#li-rules").css("background-image","url(skin/main/images/main-menu-hover.gif)");
+    } else if (urlHash=="tasks"){
+        activeMenuItem = "page-tasks";
+        $("#li-tasks").css("background-image","url(skin/main/images/main-menu-hover.gif)");
+    } else if (urlHash=="statement"){
+        activeMenuItem = "page-statement";
+        $("#li-statement").css("background-image","url(skin/main/images/main-menu-hover.gif)");
+    } else if (urlHash=="spending"){
+        activeMenuItem = "page-spending";
+        $("#li-spending").css("background-image","url(skin/main/images/main-menu-hover.gif)");
+    } else if (urlHash=="payingIn" || urlHash=="profile" || urlHash=="storedPaymentDetails" || urlHash=="paymentHistory" || urlHash=="monthlyCosts" || urlHash=="parentTopupAccount"){
+        activeMenuItem = "page-nextTransfer";
+        $("#li-nextTransfer").css("background-image","url(skin/main/images/main-menu-hover.gif)");
+    }
+
+	 $("li.icon a").click(function(){
+		  parentElementId=$(this).parent().attr("id");
+		  // reset all bg images
+		  $(".icon:not(#" + parentElementId + ")").css("background-image","none");
+		  //$(this).addClass("liactive");
+		  //$(this).css("background-image","skin/main/images/main-menu-hover.gif");
+		  activeMenuItem=$(this).attr("id");
+
+	 });
+});
+
+
+function bursarHome(){
+    bursarUser=readCookie('GroupAdminUsername');
+    bursarToken=readCookie('GroupAdminToken');
+
+    loginData=new Object;
+    loginData['username']=bursarUser;
+    loginData['password']=bursarToken;
+
+    $.ajax({
+        url: apiPath + 'user/login/api-logout',
+        data: '',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data){
+
+                $.ajax({
+                    url: apiPath + 'user/login/api-login',
+                    async: false,
+                    data: loginData,
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function( retrievedData ){
+                            if (retrievedData['loggedIn']){
+                                createCookie("GroupAdminUsername",retrievedData.adminUsername);
+                                createCookie("GroupAdminToken",retrievedData.adminToken);
+                                viewingAsId=currentUserVar;
+                                makePageCalls("schoolsHome");
+                            }
+                    },
+                    error: function (x,y,z){
+
+                    }
+                });
+        }
+    });
+
+}
+
+</script>
+
+<li class="arrowleft" style="background-image:url(skin/main/images/home-arrow-left.gif); background-repeat:no-repeat;"></li>
+
+<li class="icon first" style="text-align:center" onMouseOver="setBgHover(this,1)" onMouseOut="setBgHover(this,0)" onClick="setBg(this,1)" id="li-home">
+    <a style="color:#808184" href="<%=homePage%>" id="page-home">
+    <img src="skin/main/images/menu-icon-home.png" />
+    <br />
+    <span>Home</span>
+    </a>
+</li>
+
+<li class="divider"></li>
+
+<li class="icon" onMouseOver="setBgHover(this,1)" onMouseOut="setBgHover(this,0)" onClick="setBg(this,1)" id="li-nextTransfer">
+    <a style="color:#729f71" href="Javascript:loadPage('page2')" id="page-nextTransfer">
+    <img src="skin/main/images/menu-icon-summary.png" />
+    <br />
+    <span>Page 2</span>
+    </a>
+</li>
+
+<li class="divider"></li>
+
+<li class="icon" style="text-align:center" onMouseOver="setBgHover(this,1)" onMouseOut="setBgHover(this,0)" onClick="setBg(this,1)" id="li-tasks">
+    <a style="color:#d28b2e; text-align:center; width:100%;" href="Javascript:loadPage('page3');" id="page-tasks">
+    <img src="skin/main/images/menu-icon-earning.png" />
+    <span>Page 3</span>
+    </a>
+</li>
+
+<!--
+<li class="divider"></li>
+
+<li class="icon" onMouseOver="setBgHover(this,1)" onMouseOut="setBgHover(this,0)" onClick="setBg(this,1)" id="li-saving">
+    <a href="Javascript:loadPage('saving')" style="color:#0080b4" id="page-saving">
+    <img src="skin/main/images/menu-icon-saving.png" />
+    <br />
+    <span style="color:#0080b4">Saving</span>
+    </a>
+</li>
+//-->
+
+<li class="divider"></li>
+
+<li class="icon" onMouseOver="setBgHover(this,1)" onMouseOut="setBgHover(this,0)" onClick="setBg(this,1)" id="li-spending">
+    <a style="color:#10a3a2" href="Javascript:loadPage('page4')" id="page-spending">
+    <img src="skin/main/images/menu-icon-spending.png" />
+    <br />
+    <span>Page 4</span>
+    </a>
+</li>
+
+<li class="divider"></li>
+
+<li class="icon" onMouseOver="setBgHover(this,1)" onMouseOut="setBgHover(this,0)" onClick="setBg(this,1)" id="li-statement">
+    <a style="color:#876899" href="Javascript:loadPage('page5')" id="page-statement">
+    <img src="skin/main/images/menu-icon-statement.png" />
+    <br />
+    <span>Page 5</span>
+    </a>
+</li>
+
+<li class="divider"></li>
+
+<li class="icon last" onMouseOver="setBgHover(this,1)" onMouseOut="setBgHover(this,0)" onClick="setBg(this,1)" id="li-rules">
+    <a style="color:#d64976" href="Javascript:loadPage('contact')" id="page-rules">
+    <img src="skin/main/images/menu-icon-rules.png" />
+    <br />
+    <span>Contact</span>
+    </a>
+</li>
+
+<%
+    if (adminHomePage){%>
+<li class="divider"></li>
+
+<li class="icon last" onMouseOver="setBgHover(this,1)" onMouseOut="setBgHover(this,0)" onClick="setBg(this,1)" id="li-more">
+    <a style="color:#808184" href="<%=adminHomePage%>" id="page-more">
+    <img src="skin/main/images/menu-icon-search.png" />
+    <br />
+    <span>Search</span>
+    </a>
+</li>
+<%}%>
+
+<!--
+<li class="divider"></li>
+
+<li class="icon last" onMouseOver="setBgHover(this,1)" onMouseOut="setBgHover(this,0)" onClick="setBg(this,1)" id="li-more">
+    <a style="color:#808184" href="Javascript:loadPage('more')" id="page-more">
+    <img src="skin/main/images/menu-icon-more.png" />
+    <br />
+    <span>More</span>
+    </a>
+</li>
+//-->
+
+</ul>
+</div>
+</div>
+</div>

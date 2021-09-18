@@ -1,0 +1,122 @@
+<%
+if (getUser['user']['userType']['CHILD'] == true){
+        userType="child";
+    } else if (getUser['user']['userType']['PARENT'] == true){
+        userType="parent";
+    } else if (getUser['user']['userType']['RELATIVE'] == true){
+        headerText="Statement (Relative)";
+    userType="relative";
+}
+
+profileSrc = getProfileImageSrc(getUser["user"].imageId, getUser["user"].gender, "PARENT", "large");
+
+%>
+<script>
+$(function(){
+
+	 $("#person_image").click(function(){
+		  var currentOrUser = { "imageType" : "updateProfile", "formToUpdate" : "" };
+		  popupUrl = "templates/blocks/lightbox/addPictureNew.ejs";
+		  doPopup(popupUrl,320,290,currentOrUser);
+		  attachJavaScriptFileInitial("addPicture.js");
+	 });
+	 $("#person_image_overlay").click(function(){
+		  var currentOrUser = { "imageType" : "updateProfile", "formToUpdate" : "" };
+		  popupUrl = "templates/blocks/lightbox/addPictureNew.ejs";
+		  doPopup(popupUrl,320,290,currentOrUser);
+		  attachJavaScriptFileInitial("addPicture.js");
+	 });
+
+	 $("#person_image").on("mouseover",function(){
+		  if( $("#person_image_overlay").is(':animated')) {} else {
+				$("#person_image_overlay").animate({opacity:0.8,top:'95px'},300);
+		  }
+	 });
+
+	 $("#person_image").on("mouseout",function(e){
+		  if( !$("#person_image_overlay").is(':animated')) {
+				if( !$(e.relatedTarget).hasClass('anim_class')){
+					 $("#person_image_overlay").animate({top:'100px',opacity:0},300);
+				}
+		  }
+	 });
+
+	 $("#person_image_overlay").on("mouseout",function(e){
+		  if( !$("#person_image_overlay").is(':animated')) {
+				if( !$(e.relatedTarget).hasClass('anim_class')){
+					 $("#person_image_overlay").animate({top:'100px',opacity:0},300);
+				}
+		  }
+	 });
+
+});
+</script>
+            <div id="person_image" class="profile-image" class="anim_class">
+					 <img src="<%=profileSrc%>" width="81" height="81" class="anim_class">
+				</div>
+		      <div id="person_image_overlay" class="anim_class">
+					 <span style="position:relative; top:-2px" class="anim_class" id="person_image_overlay_span">Click to change picture</span>
+				</div>
+				<div id="whiteout" class="whiteout"></div>
+
+				<div id="page_title">
+					 <h1 id="headerText"></h1>
+				</div>
+
+            <div id="page_top_account_info">
+
+                <% if (userType == "child"){%>
+                <div id="top_total_available" class="top_button_total_area">
+                        <div id="top_total_available_button" class="top_total_button"><span id="amt_avail"></span></div>
+                        <div id="top_total_available_text" class="top_total_text">Available to spend</div>
+                </div>
+                <%}%>
+                <div id="top_total_balance" class="top_button_total_area">
+                        <div id="top_total_balance_button" class="top_total_button"><span class="parentBalance" id="balanceMainHeadings"></span></div>
+                        <div id="top_total_balance_text" class="top_total_text">Parent balance</div>
+                </div>
+                <% if (userType == "parent" || currentUserVar != viewingAsId){%>
+                <div id="top_button_topup" class="top_button_total_area" style="margin:0px; margin-right:0px;" >
+                        <% if(!getActivation.complete || !getActivation.madePayment){%>
+                        <div class="coverCardParentUncomplete" style="cursor: pointer; width: 122px; margin: 90px 0 0px 573px; height: 33px;"></div>
+                        <%}%>
+                        <a id="top_up_account_button" class="button" style="font-size:14px; border-radius:4px;">Top up account</a>
+                </div>
+                <%} else if (userType == "child"){%>
+                <div id="top_button_topup" class="top_button_total_area" style="margin:0px; margin-right:0px;" >
+                        <div id="quick_transfer_button" class="top_total_button green_gradient" style="font-size:14px">Quick transfer</div>
+                </div>
+                <%}%>
+            </div>
+
+<script type="text/javascript">
+$("#top_up_account_button").click(function(){
+    makePageCalls("parentTopupAccount");
+	 setBgExternal("li-nextTransfer");
+});
+
+$("#quick_transfer_button").click(function(){
+        child=Array;
+        for(objectId in currentPageData.getChildren.users){
+            if (currentPageData.getChildren.users[objectId].userId==currentPageData.getUser['user']['userId']){
+                child['childName'] = currentPageData.getChildren.users[objectId].relationDetails.firstName;
+            }
+        }
+
+        child['childId']=currentPageData.getUser['user']['userId'];
+        doPopup('templates/blocks/main/parent/quickTransferPopup.ejs',300,270,child);
+        attachJavaScriptFileInitial("parentSummaryOneOff.js");
+});
+
+rdc.rdListenerRegister('balance_single', "$$_current_$$", $('#balanceMainHeadings'),'amount_html', 0, true);
+
+if (currentPageData.getUser["user"]["userType"]["CHILD"]==true){
+    rdc.rdListenerRegister('available_to_spend', currentPageData.getUser['user']['userId'], $('#amt_avail'),'available_to_spend', 0, true);
+}
+
+$(".coverCardParentUncomplete").on("click", function(ev){
+    ev.stopPropagation();
+    makePageCalls("parentActivation");
+});
+
+</script>

@@ -1,0 +1,61 @@
+<%
+var x = "This is the value of x"
+var td = Array();
+td[0] = {this:"This",that:"That"};
+td[1] = {this:"Value of this",that:"value of that"};
+td[2] = {this:"Third value of this",that:"Third value of that"};
+%>
+
+
+<h1 style="margin: 20px 0px">Page 5</h1>
+
+<p>This is the fifth page!</p>
+<br />
+<p>Below is a variable dropped in using EJS tags:</p>
+<br />
+
+<p> x = <%=x%></p>
+<br />
+<p>Here is a table populated by date from EJS:</p>
+<br />
+
+<div style="text-align:center; margin:0px auto;">
+<table style="margin:0px auto"><thead><th>This</th><th>That</th></tr></thead><tbody>
+<% 
+for (i=0;i<td.length;i++){
+%>
+<tr><td><%=td[i].this%></td><td><%=td[i].that%></td></tr>
+<%
+}
+%>
+</tbody></table>
+</div>
+
+<p>This page should have also loaded some data from the api in page5/data into getPage5 variable. This is accessible using currentPageData.getPage5 as follows:</p>
+<br />
+
+<div style="text-align:center; margin:0px auto;">
+<table style="margin:0px auto"><thead><th>Title</th><th>Color</th></tr></thead><tbody>
+<% 
+for (i=0;i<currentPageData.getPage5.length;i++){
+%>
+<tr><td><%=currentPageData.getPage5[i].title%></td><td><%=currentPageData.getPage5[i].color%></td></tr>
+<%
+}
+%>
+</tbody></table>
+</div>
+
+<script>
+
+$(document).ready(function() {
+    setHeaderText("Page 5"); // no longer required as we use a different template
+
+
+});
+
+// we need to alter the default css here to provide the wide layout and hide the header.
+$("#main").css("width","1003px");
+$("#pageHeader").hide();
+</script>
+

@@ -1,0 +1,241 @@
+{
+    "topAccountDetails" : {
+        "file" : {"address": "topBar"},
+        "AJAXcalls" : {
+
+        },
+        "javascriptURL" : "topAccountDetails.js",
+        "timedEvents" : ["checkBalance"]
+    },
+    "topLinksSignedIn":{
+        "file" : {"address": "topBar"},
+        "AJAXcalls" : {
+            "getUser" : {"URL" : "user/details/$$_current_$$", "data" : {"type" : "basic"}}
+        },
+        "javascriptURL" : "topLinksSignedIn.js"
+    },
+    "topLinks":{
+        "file" : {"address": "topBar"}
+    },
+    "topLogin":{
+        "file" : {"address": "topBar"},
+        "javascriptURL" : "topLogin.js"
+    },
+    "topWelcomeMsg":{
+        "file" : {"address": "topBar"}
+    },
+    "logoHeaders":{
+        "file" : {"address": "logoHeaders"},
+        "AJAXcalls" : {
+            "getUser" : {"URL" : "user/details/$$_current_$$", "data" : {"type" : "basic"}}
+        },
+        "javascriptURL" : "logoHeaders.js"
+    },
+    "homeFooter": {
+        "type" : "external",
+        "AJAXcalls" : {
+            "getContentHomeFooter" : {"URL" : "media/content-block/HOME_FOOTER"}
+        }
+    },
+    "parentFooter": {
+        "type" : "external",
+        "AJAXcalls" : {
+            "getContentHomeFooter" : {"URL" : "media/content-block/PARENT_FOOTER"}
+        }
+    },
+    "messagesSummaryMainCenter":{
+        "file" : {"address": "main/parent"},
+        "AJAXcalls" : {
+            "getMessageHistory" : {"URL" : "messages", "data" : {"userId" : "%%viewingAsId%%"}}
+        },
+        "javascriptURL" : "messagesSummary.js"
+    },
+
+    "ie7Out": {
+        "file" : {"address": "main/parent"},
+        "javascriptURL" : "ie7Out.js"
+    },
+    "parentLogin": {
+        "file" : {"address": "main/parent"},
+        "javascriptURL" : "parentLogin.js"
+    },
+    "parentLoginTimeout": {
+        "file" : {"address": "main/parent"},
+        "javascriptURL" : "parentLoginTimeout.js"
+    },
+    "parentLoginLeft": {
+        "file" : {"address": "main/parent"}
+    },
+    "loginFooter": {
+        "file" : {"address": "main/shared"}
+    },
+    "webappFooter": {
+        "file" : {"address": "main/shared"}
+    },
+    "profile": {
+        "file" : {"address": "main/shared"},
+        "AJAXcalls" : {
+            "getUserFull" : {"URL" : "user/details/%%viewingAsId%%", "data" : {"type" : "full"}},
+            "getChildren" : {"URL" : "user/details/", "data" : {"childrenOf" : "$$_current_$$"}},
+            "getUser" : {"URL" : "user/details/%%viewingAsId%%", "data" : {"type" : "basic", "debug":"1"}},
+            "getPrefs" : {"URL" : "user/preference/$$_CURRENT_$$?preference=allowChildApprovingTasks"}
+        },
+        "javascriptURL" : "profile.js"
+    },
+
+    "webappHeader": {
+        "file" : {"webappHeader" : "header"},
+        "AJAXcalls" : {
+            "getUser" : {"URL" : "user/details/$$_current_$$", "data" : {"type" : "basic"}}
+        },
+        "javascriptURL" : "topLinksSignedIn.js"
+    },
+
+    "topBarMainApp": {
+        "file" : {"topBarMainApp" : "topBar"},
+        "AJAXcalls" : {
+            "getUser" : {"URL" : "user/details/$$_current_$$", "data" : {"type" : "basic"}}
+        }
+    },
+    "topBarMainAppChild": {
+        "file" : {"topBarMainAppChild" : "topBar"},
+        "AJAXcalls" : {
+            "getUser" : {"URL" : "user/details/$$_current_$$", "data" : {"type" : "basic"}},
+            "getCardChild": { "URL" : "mny/card" },
+            "getCardChildLogedInAsChild" : {"URL" : "mny/card/$$_current_$$"}
+        }
+    },
+
+    "homeHeaderMenu": {
+        "type" : "external",
+        "AJAXcalls" : {
+            "getContentHomeHeaderMenu" : {"URL" : "media/content-block/HOME_HEADER_MENU"}
+        }
+    },
+
+    "webappHeaderMenu" : {
+        "file" : {"webappHeaderMenu" : "webappHeaderMenu"},
+        "AJAXcalls" : {
+        }
+    },
+
+    "generalFooter": {
+        "file" : {"generalFooter": "main/shared"}
+    },
+
+    "progressBar": {
+        "file" : {"address": "secondaryHeader"},
+        "javascriptURL" : "progressBar.js"
+    },
+
+    "welcomeHeader": {
+        "file" : {"address": "main/shared"},
+        "AJAXcalls" : {
+            "getChildren" : {"URL" : "user/details/", "data" : {"childrenOf" : "$$_current_$$"}},
+            "getUserWelcome" : {"URL" : "user/details/$$_current_$$", "data" : {"type" : "basic","getKycStatus":"true"}},
+            "getUserFIS" : {"URL" : "user/details/$$_current_$$", "data" : {"type" : "checkIfFISAccount"}},
+            "getPaymentForecastFull" : {"URL" :  "mny/payment-forecast/$$_current_$$", "data" : {"type" : "full"}}
+        }
+    },
+
+    "maintenance": {
+        "file" : {"address": "main/shared"}
+    },
+
+    "appHome" : {
+        "file" : {"address": "main/parent"},
+        "AJAXcalls" : {
+            "getUser" : {"URL" : "user/details/$$_current_$$", "data" : {"type" : "basic"}}
+        },
+        "javascriptURL" : ["homepage.js", "componentFunctions.js"]
+    },
+
+    "appLogin" : {
+        "file" : {"address": "main"},
+        "AJAXcalls" : {
+        },
+        "javascriptURL" : ["login.js"]
+    },
+
+    "webAppStart": {
+        "file" : {"address": "main/parent"},
+        "AJAXcalls" : {
+            "getUser" : {"URL" : "user/details/$$_current_$$", "data" : {"type" : "basic"}},
+            "getUsersBalance" : {"URL" : "mny/balance/%%viewingAsId%%"},
+            "getStatement" : {"URL" : "mny/statement/%%viewingAsId%%"},
+            "getChildLimits" : {"URL" : "mny/limits/%%viewingAsId%%"}
+        },
+        "javascriptURL" : "webapp.js"
+    },
+    "appStatement": {
+        "file" : {"address": "main/parent"},
+        "AJAXcalls" : {
+            "getUser" : {"URL" : "user/details/%%viewingAsId%%", "data" : {"type" : "basic"}},
+            "getUsersBalance" : {"URL" : "mny/balance/%%viewingAsId%%"},
+            "getStatement" : {"URL" : "mny/statement/%%viewingAsId%%"},
+            "getChildLimits" : {"URL" : "mny/limits/%%viewingAsId%%"},
+            "getPKTMNY" : {"URL" : "mny/pktmny/%%viewingAsId%%"}
+        },
+        "javascriptURL" : "webapp.js"
+    },
+    "forgottenCredentials": {
+        "file" : {"address": "main/parent"},
+        "AJAXcalls" : {
+            "getSecurityQus" : {"URL" : "service/form-options/index/category/questions"}
+        },
+        "javascriptURL" : "forgottenCredentials.js"
+    },
+    "resetUserPassword": {
+        "file" : {"address": "main/shared"}
+    },
+    "setPassword": {
+        "file" : {"address": "main/parent"},
+        "javascriptURL" : "setPassword.js"
+    },
+    "more" : {
+        "file" : {"address": "main/shared"}
+    },
+    "paymentMenu" : {
+        "file" : {"address" : "main/header"}
+    },
+    "paymentMenuPayingIn" : {
+        "file" : {"address" : "main/header"}
+    },
+    "noMenu" : {
+        "file" : {"address" : "main/header"}
+    },
+    "progressBarActivation": {
+        "file" : {"address": "secondaryHeader"},
+        "AJAXcalls" : {
+            "getAdult" : {"URL" : "user/adult/"},
+            "getJunior" : {"URL" : "user/junior/", "data" : {"id" : "%%viewingAsId%%"}}
+        }
+    },
+    "page2" : {
+        "file" : {"address" : "main"}
+    },
+    "page3" : {
+        "file" : {"address" : "main"}
+    },
+    "page4" : {
+        "file" : {"address" : "main"}
+    },
+    "page5" : {
+        "file" : {"address" : "main"},
+        "AJAXcalls" : {
+		"getPage5" : {"URL" : "page5/data/", "data" : {"type" : "basic"}}
+	}
+    },
+    "appRules": {
+        "file" : {"address": "main/parent"},
+        "AJAXcalls" : {
+            "getUser" : {"URL" : "user/details/%%viewingAsId%%", "data" : {"type" : "basic"}},
+            "getChildren" : {"URL" : "user/details/", "data" : {"childrenOf" : "$$_current_$$"}},
+            "getAllPktmny" : {"URL" : "mny/pktmny"},
+            "getAllCards" : {"URL" : "mny/card"},
+            "getAllLimits" : {"URL" : "mny/limits"}
+        },
+        "javascriptURL" : "appRules.js"
+    }
+
+}

@@ -1,0 +1,35 @@
+<%
+
+if (currentPageData.getUser){
+	var nameAccount = currentPageData.getUser["user"]["firstName"] +" "+ currentPageData.getUser["user"]["lastName"];
+} else {
+	var nameAccount="Please log in";
+}
+
+%>
+
+<div id="header_inner">
+    <div id="header_inner_left">
+        <a href="#home"><img src="skin/main/images/logo.gif" id="main_logo" /></a>
+    </div>
+    <div id="header_inner_right" >
+        <div id="login_back_tab">
+            <a href="Javascript:void(0)" id="logout_button" class="logout" style="font-family:SegoeUI;"><span style="position:relative; top:-4px">Logout</span><span style="position:relative; left:5px;"><img src="skin/main/images/logout-icon.gif"></span></a>
+        </div>
+
+    </div>
+
+    <div id="header_inner_center" style="float:left; clear:none;">
+        <a href="#home"><h1><%= nameAccount %></h1></a>
+    </div>
+
+</div>
+
+
+<script>
+
+	if(screen.availWidth < 980){
+		$("meta[name=viewport]").attr('content', 'width=device-width, initial-scale=0.75');//, minimum-scale=0.75, maximum-scale=1, user-scalable=1');
+	}
+
+</script>
