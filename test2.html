@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+    <title>Try EJS</title>
+    <script type="text/javascript" src="javascripts/ejs/ejs.js"></script>
+<script>
+	appVersion = "0.6";
+</script>
+</head>
+<body>
+    <div id="container"><h1>This is the container</h1></div>
+    <script>
+        var initialdata = { title: "Try EJS right here!", page: "1", content: "Content from the data array" };
+	var newdata = { title: "Why not try EJS!", page: "4", content: "This is some content from the newdata array" };
+        var fragment = new EJS({url: 'https://www.mattplatts.com/demo/js-framework/test2_template.ejs'}).render(initialdata);
+	console.log(fragment);
+        document.getElementById('container').innerHTML = document.getElementById('container').innerHTML + fragment;
+
+	function doThis(){
+		var fragment2 = new EJS({url: 'https://www.mattplatts.com/demo/js-framework/test2_template2.ejs'}).render(newdata);
+		document.getElementById('container').innerHTML = document.getElementById('container').innerHTML + fragment2;
+		//document.getElementById('container').innerHTML = fragment2;
+	}
+    </script>
+<p>Why does newdata not get used and only data on template2? Read the code in this html file to see what I mean.</p>
+<a href="Javascript:doThis()">Do This</a>
+</body>
+</html>

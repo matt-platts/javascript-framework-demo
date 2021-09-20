@@ -6,6 +6,7 @@ $(".logout").click(function() {
                 dataType: 'json',
                 success: function(data){
 			viewingAsId=currentUserVar;
+			alert(homeURL);
 			window.location=homeURL;
                 }
          });
